@@ -1,6 +1,6 @@
 {
   "name": "hritik-calculator-app",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Calculator App",
   "main": "index.js",
   "scripts": {
