@@ -1,4 +1,4 @@
-import { add, subtract, multiply } from "../../index";
+import { add, subtract, multiply, divide } from "../../index";
 
 describe("Add operation", () => {
   it("should add numbers 1 and 2 correctly", () => {
@@ -55,5 +55,23 @@ describe("Multiply operation", () => {
 
   it("should multiply numbers 0.5 and 0.5 correctly", () => {
     expect(multiply(0.5, 0.5)).toEqual(0.25);
+  });
+});
+
+describe("Divide operation", () => {
+  it("should divide numbers 10 and 2 correctly", () => {
+    expect(divide(10, 2)).toEqual(5);
+  });
+
+  it("should divide numbers 5 and 2 correctly", () => {
+    expect(divide(5, 2)).toEqual(2.5);
+  });
+
+  it("should divide numbers -10 and 2 correctly", () => {
+    expect(divide(-10, 2)).toEqual(-5);
+  });
+
+  it("should divide numbers 5.5 and 1.1 correctly", () => {
+    expect(divide(5.5, 1.1)).toEqual(5);
   });
 });
