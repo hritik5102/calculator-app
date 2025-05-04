@@ -32,6 +32,18 @@
   - [Why Does Jest Install It by Default?](#why-does-jest-install-it-by-default)
   - [Do You Need to Configure It?](#do-you-need-to-configure-it)
   - [Key Takeaway:](#key-takeaway)
+- [Check Tests and Linting Issues with Git Hooks Before Commit](#check-tests-and-linting-issues-with-git-hooks-before-commit)
+  - [Goal](#goal)
+  - [Problem](#problem-1)
+  - [Approach](#approach)
+  - [What is GitHook?](#what-is-githook)
+    - [Pre-commit:](#pre-commit)
+    - [Pre-push:](#pre-push)
+  - [Solution](#solution)
+  - [Setup Husky](#setup-husky)
+    - [1. Install Husky](#1-install-husky)
+    - [2. Initialize Husky](#2-initialize-husky)
+    - [3. Manually Create Hooks](#3-manually-create-hooks)
 
 <!-- /code_chunk_output -->
 
@@ -376,3 +388,65 @@ When you install **Jest** (`jest`), it often includes `babel-preset-jest` as a *
 - You only need to manually configure Babel if your setup isn’t framework-managed (e.g., custom projects).
 
 Want to check if it’s being used? Run `npm ls babel-preset-jest` or check `jest --showConfig` for Babel settings.
+
+## Check Tests and Linting Issues with Git Hooks Before Commit
+
+### Goal
+
+To ensure tests are verified before creating a commit, we can run them ahead of time. This approach helps fix the tests before pushing the commits so that tests do not fail during office bots executions.
+
+### Problem
+
+When doing development, it is common to have linting and test failures in the code. We do have the scripts/tasks that can fix these linting and test-related issues. It is easy to forget to run these common tasks before pushing code, and this can result in a broken build, or the next developer will see the issues when pulling down the latest code.
+
+### Approach
+
+A way to work around this problem is to use git hooks that will allow you to hook into the git workflow to run tasks.
+
+We can run our scripts, which include both linting and test tasks, using either the pre-commit or pre-push hook. If tasks fail, the pre-commit hook will not create a commit, otherwise, the commit will be created successfully, and similarly, if tasks fail, then the pre-push hook will not push the commit; otherwise, code will not be pushed.
+
+### What is GitHook?
+
+Git Hooks are scripts that Git can execute automatically when certain events occur, such as before or after a commit, push, or merge. There are several types of Git Hooks, each with a specific purpose.
+
+For eg: whenever you write code, it gets staged and tracked by Git. When you make a commit, it goes into your local repository. You can also trigger a Git hook during this process, which allows you to run a script. This script can block the commit if certain conditions that you've set are not met.
+
+
+#### Pre-commit:
+- The pre-commit script is executed every time you run git commit before Git asks the developer for a commit message or generates a commit object.
+- Pre-commit hooks can perform a variety of tasks, including: Checking for formatting errors, Ensuring tests pass, Running code linting, and Performing security scans.
+
+#### Pre-push:
+- A pre-push hook is a client-side git hook that runs right before a reference is pushed to a remote ( git push ).
+
+### Solution
+
+To solve the above problem, we can use “Git Hook Manager”
+
+1. Husky
+2. Pre-commit
+3. Overcommit
+4. lefthook
+
+The most widely used Git hook manager is Husky. It is a popular tool that makes it easy to manage Git hooks in JavaScript/Node.js projects. With Husky, you can set up hooks such as pre-commit, pre-push, or post-merge scripts by simply configuring them in your project's package.json or configuration files.
+
+### Setup Husky
+
+#### 1. Install Husky
+```bash
+npm install husky --save-dev
+```
+
+#### 2. Initialize Husky
+```bash
+npx husky init
+```
+This creates a `.husky` directory with a sample `pre-commit` hook .
+
+#### 3. Manually Create Hooks
+Instead of using `husky add`, you should now manually create hook files in the `.husky` directory. For example:
+
+```bash
+echo "npm test" > .husky/pre-commit
+chmod +x .husky/pre-commit
+```
