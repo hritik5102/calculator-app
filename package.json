@@ -8,11 +8,25 @@
     "test:watch": "jest --watch",
     "prepare": "husky"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hritik5102/calculator-app"
+  },
   "keywords": [
-    "calculator"
+    "calculator",
+    "math",
+    "operation"
   ],
-  "author": "Hritik Jaiswal",
+  "author": {
+    "name": "Hritik Jaiswal",
+    "email": "hritik.dj2000@gmail.com",
+    "url": "https://github.com/hritik5102"
+  },
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hritik5102/calculator-app/issues"
+  },
+  "homepage": "https://github.com/hritik5102/calculator-app",
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.1",
